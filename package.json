@@ -3,7 +3,7 @@
   "author": "Piloteers GmbH",
   "version": "1.0.1",
   "description": "Standard models shared by frontend and backend projects.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
     "/dist"
   ],
