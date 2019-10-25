@@ -1,0 +1,45 @@
+{
+  "name": "@piloteers/common-models",
+  "author": "Piloteers GmbH",
+  "version": "1.0.0",
+  "description": "Standard models shared by frontend and backend projects.",
+  "main": "index.js",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run generate-barrels && tsc",
+    "develop": "npm run generate-barrels && tsc -p tsconfig.json",
+    "develop:watch": "npm run generate-barrels && tsc -p tsconfig.development.json --watch",
+    "build:production": "npm run clean && tsc",
+    "clean": "rm -rf ./dist ./.tsbuildinfo",
+    "generate-barrels": "barrelsby -d ./src/ -D",
+    "docs:build": "typedoc",
+    "release-patch": "npm version patch && git push && npm publish",
+    "release-minor": "npm version minor && git push && npm publish",
+    "release-major": "npm version major && git push && npm publish"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Piloteers/common-models"
+  },
+  "bugs": {
+    "url": "https://github.com/Piloteers/common-models/issues"
+  },
+  "homepage": "https://github.com/Piloteers/common-models#readme",
+  "devDependencies": {
+    "@piloteers/eslint-config": "^1.0.23",
+    "@piloteers/ts-config": "^1.0.35",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "eslint": "^6.5.1",
+    "eslint-plugin-jsdoc": "^15.12.1",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@types/uuid": "^3.4.5",
+    "barrelsby": "^2.2.0",
+    "uuid": "^3.3.3"
+  }
+}
