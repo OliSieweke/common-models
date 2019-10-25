@@ -3,3 +3,4 @@
  */
 
 export * from "./db-model";
+export * from "./users/authentication-user";

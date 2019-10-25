@@ -1,6 +1,8 @@
 import { v4 as UUID } from "uuid";
+import { keys } from 'ts-transformer-keys';
 
 
+type isPropertyOfModel = any;
 /**
  * Standard DB Model for creating and updating entries.
  */
@@ -22,6 +24,14 @@ export class DbModel {
      * @param json  JSON string
      */
     static fromJson<T extends typeof DbModel>(this: T, json: string): InstanceType<T> {
+        const parsedJson = JSON.parse(json);
+
+        for(let key of Object.keys(json) as (keyof InstanceType<T>)[]) {
+            if(!keys<InstanceType<T>>().includes(key)) {
+                delete parsedJson[key];
+            }
+        }
+
         return Reflect.construct(this, [JSON.parse(json)]);
     }
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
