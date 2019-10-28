@@ -1,38 +1,8 @@
-import { DbModel } from "../db-model";
+import { DbModel }    from "../db-model";
+import { Permission, PermissionTypesEnum, RolesEnum } from "../permissions/permission";
 
 
-/**
- *
- */
-export enum PermissionTypesEnum {
-    GLOBAL = "GLOBAL",
-    COMPANY = "COMPANY",
-}
 
-export enum RolesEnum {
-    // Global
-    WEBSITE_USER = "WEBSITE_USER",
-    REGISTERED_USER = "REGISTERED_USER",
-
-    // COMPANY
-    COMPANY_USER = "COMPANY_USER",
-    COMPANY_OWNER = "COMPANY_OWNER",
-
-    // Admin
-    ADMIN_USER = "ADMIN_USER",
-    ADMIN_COMPANY = "ADMIN_COMPANY",
-}
-
-/**
- *
- */
-export class Permission extends DbModel {
-    constructor(
-        public resourceType: PermissionTypesEnum,
-        public resourceId: string,
-        public roles: RolesEnum[],
-    ) { super()}
-}
 
 /**
  *
@@ -41,7 +11,7 @@ export class AuthenticationUser extends DbModel {
     constructor(
         public sub: string,
         public email: string,
-        public permissions?: Permission[],
+        public permissions: Permission[],
     ) { super() }
 
     static create(
