@@ -1,6 +1,3 @@
 {
     "extends": "@piloteers/ts-config/tsconfig.common.json",
-    "plugins": [
-        { "transform": "ts-transformer-keys/transformer" }
-    ]
 }

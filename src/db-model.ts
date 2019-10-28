@@ -1,40 +1,35 @@
-import { v4 as UUID } from "uuid";
-import { keys } from 'ts-transformer-keys';
+import { v4 as UUID }                     from "uuid";
 
+interface DbModelInterface {
+    resourceId?: string;
+    created: number;
+    updated?: number;
+}
 
-type isPropertyOfModel = any;
 /**
  * Standard DB Model for creating and updating entries.
  */
-export class DbModel {
+export abstract class DbModel {
     resourceId?: string;
     created?: number;
     updated?: number;
 
-    constructor(inputObj: object) {
-        Object.assign(this, inputObj);
-    }
-
-    /* eslint-disable jsdoc/require-param, jsdoc/check-param-names */
     /**
-     * This method should be used to construct input instances from JSON strings.
+     * Constructs instances from JSON strings.
      *
-     *__WARNING:__ parsing JSON is not a safe operation, make sure you trust your input string or catch potential errors appropriately.
+     * __NB:__ the JSON string is assumed to represent data of an entity that has already been created, no default properties are being added.
+     *
+     *__WARNING:__ parsing JSON is not a safe operation, it should be ensured that the input string is trusted or that potential errors are caught.
      *
      * @param json  JSON string
      */
-    static fromJson<T extends typeof DbModel>(this: T, json: string): InstanceType<T> {
-        const parsedJson = JSON.parse(json);
-
-        for(let key of Object.keys(json) as (keyof InstanceType<T>)[]) {
-            if(!keys<InstanceType<T>>().includes(key)) {
-                delete parsedJson[key];
-            }
-        }
-
-        return Reflect.construct(this, [JSON.parse(json)]);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore // [27.10.19 | Oli] TODO: `AuthenticatedUser extends typeof DbModel` leads to type error in for example `User.fromJson("")`. Might be a TS bug, investigate...
+    static fromJson<T>(this: T, json: string): InstanceType<T> {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore // [27.10.19 | Oli] TODO: We would like `create()` to be an abstract static class, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
+        return this.create(JSON.parse(json), { withDefaults: false });
     }
-    /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
 
     /**
      * Returns an instance to be used to create a new DB entry, including optional `resourceId` and `created` fields.
@@ -72,7 +67,6 @@ export class DbModel {
         this: T,
         { updated = true, blackList = [], whiteList }: { updated?: boolean, blackList?: (keyof T)[], whiteList?: (keyof T)[] } = {},
     ) {
-
         blackList.push("created", "resourceId");                // The "resourceId" and "created" fields should never be overwritten when present
         whiteList && updated && whiteList.push("updated");      // We don't want to remove the "updated" field when explicitly specified
 
