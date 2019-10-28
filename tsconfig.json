@@ -1,3 +1,7 @@
 {
     "extends": "@piloteers/ts-config/tsconfig.backend-project.json",
+    "compilerOptions": {
+        "declaration": true,
+        "declarationMap": true
+    }
 }

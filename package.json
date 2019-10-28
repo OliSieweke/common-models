@@ -10,9 +10,8 @@
     ],
     "scripts": {
         "build": "npm run clean && npm run generate-barrels && tsc",
-        "develop": "npm run generate-barrels && tsc -p tsconfig.json",
+        "develop": "npm run generate-barrels && tsc -p tsconfig.development.json",
         "develop:watch": "npm run generate-barrels && tsc -p tsconfig.development.json --watch",
-        "build:production": "npm run clean && tsc",
         "clean": "rm -rf ./dist ./.tsbuildinfo",
         "generate-barrels": "barrelsby -d ./src/ -D",
         "docs:build": "typedoc",
@@ -31,7 +30,7 @@
     "homepage": "https://github.com/Piloteers/common-models#readme",
     "devDependencies": {
         "@piloteers/eslint-config": "^1.0.23",
-        "@piloteers/ts-config": "^1.0.35",
+        "@piloteers/ts-config": "^1.0.36",
         "@typescript-eslint/eslint-plugin": "^2.5.0",
         "@typescript-eslint/parser": "^2.5.0",
         "eslint": "^6.5.1",
