@@ -25,7 +25,7 @@ export abstract class DbModel {
      */
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore // [27.10.19 | Oli] TODO: `AuthenticatedUser extends typeof DbModel` leads to type error in for example `User.fromJson("")`. Might be a TS bug, investigate...
-    static fromJson<T>(this: T, json: string | object): InstanceType<T> {
+    static fromJson<T>(this: T, json: string | object): any {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore // [27.10.19 | Oli] TODO: We would like `create()` to be an abstract static class, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
         return this.create(typeof json === "string" ? JSON.parse(json) : json, { withDefaults: false });
