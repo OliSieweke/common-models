@@ -3,10 +3,9 @@
     "author": "Piloteers GmbH",
     "version": "1.0.5",
     "description": "Standard models shared by frontend and backend projects.",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "src/index.ts",
     "files": [
-        "/dist"
+        "/src"
     ],
     "scripts": {
         "build": "npm run clean && npm run generate-barrels && tsc",
