@@ -61,12 +61,3 @@ export class AuthenticationUser extends DbModel {
     ] as const;
 }
 
-
-// class User extends AuthenticationUser {
-//     constructor(
-//         public firstName: string,
-//         public lastName: string,
-//         ...args: ConstructorParameters<typeof AuthenticationUser>
-//     ) {super(...args)}
-// }
-
