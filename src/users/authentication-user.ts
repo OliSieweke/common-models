@@ -1,7 +1,5 @@
-import { DbModel }    from "../db-model";
+import { DbModel }                                    from "../db-model";
 import { Permission, PermissionTypesEnum, RolesEnum } from "../permissions/permission";
-
-
 
 
 /**
