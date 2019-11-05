@@ -34,7 +34,7 @@
     ],
     "devDependencies": {
         "@piloteers/eslint-config": "^1.0.23",
-        "@piloteers/ts-config": "^1.0.36",
+        "@piloteers/ts-config": "^1.0.39",
         "@typescript-eslint/eslint-plugin": "^2.5.0",
         "@typescript-eslint/parser": "^2.5.0",
         "eslint": "^6.5.1",
