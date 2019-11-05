@@ -29,6 +29,9 @@
         "url": "https://github.com/Piloteers/common-models/issues"
     },
     "homepage": "https://github.com/Piloteers/common-models#readme",
+    "keywords": [
+        "models"
+    ],
     "devDependencies": {
         "@piloteers/eslint-config": "^1.0.23",
         "@piloteers/ts-config": "^1.0.36",
