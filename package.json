@@ -33,12 +33,12 @@
         "models"
     ],
     "devDependencies": {
-        "@piloteers/eslint-config": "^1.0.23",
+        "@piloteers/eslint-config": "^1.0.25",
         "@piloteers/ts-config": "^1.0.39",
-        "@typescript-eslint/eslint-plugin": "^2.5.0",
+        "@typescript-eslint/eslint-plugin": "^2.6.1",
         "@typescript-eslint/parser": "^2.5.0",
-        "eslint": "^6.5.1",
-        "eslint-plugin-jsdoc": "^15.12.1",
+        "eslint": "^6.6.0",
+        "eslint-plugin-jsdoc": "^17.1.0",
         "typescript": "^3.6.4"
     },
     "dependencies": {
