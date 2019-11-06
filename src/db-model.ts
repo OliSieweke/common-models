@@ -1,4 +1,6 @@
-import { v4 as UUID } from "uuid";
+import { v4 as UUID }                             from "uuid";
+import { Constructor, PartialInstanceProperties } from "./utils/types";
+
 
 /**
  * Standard DB Model for creating instances and preparing Dynamo DB data. To be shared across the front-end and back-end.
@@ -73,7 +75,7 @@ export class DbModel {
         jsonArray: PartialInstanceProperties<T>[],
         { withDefaults = false }: { withDefaults?: boolean } = {},
     ): InstanceType<T>[] {
-        return jsonArray.map(json => this.fromJson(json, {withDefaults}));
+        return jsonArray.map(json => this.fromJson(json, { withDefaults }));
     }
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
 
@@ -94,7 +96,7 @@ export class DbModel {
         { withDefaults = true }: { withDefaults?: boolean } = {},
     ): InstanceType<T>[] {
         const jsonArray = JSON.parse(jsonArrayString) as PartialInstanceProperties<T>[];
-        return this.fromJsonArray(jsonArray, {withDefaults});
+        return this.fromJsonArray(jsonArray, { withDefaults });
     }
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
 
@@ -155,14 +157,6 @@ export class DbModel {
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
 }
 
-type Constructor = new(...args: any) => any; /* eslint-disable-line @typescript-eslint/no-type-alias, @typescript-eslint/no-explicit-any */
 interface DbModelExtension<T extends typeof DbModel & Constructor> {
     create(params: PartialInstanceProperties<InstanceType<T>>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
 }
-
-// https://medium.com/dailyjs/typescript-create-a-condition-based-subset-types-9d902cea5b8c
-type NonMethodKeys<T> = Exclude<{ /* eslint-disable-line @typescript-eslint/no-type-alias */
-    [Key in keyof T]:
-    T[Key] extends Function ? never : Key
-}[keyof T], undefined>;
-type PartialInstanceProperties<T extends new(...args: any) => any> = Partial<Pick<InstanceType<T>, NonMethodKeys<InstanceType<T>>>>; /* eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-type-alias */

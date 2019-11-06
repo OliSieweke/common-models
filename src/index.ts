@@ -5,3 +5,4 @@
 export * from "./db-model";
 export * from "./permissions/permission";
 export * from "./users/authentication-user";
+export * from "./utils/types";
