@@ -11,6 +11,6 @@ export type NonMethodKeys<T> = Exclude<{
 export type InstanceProperties<T extends new(...args: any) => any> = Pick<InstanceType<T>, NonMethodKeys<InstanceType<T>>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 export type PartialInstanceProperties<T extends new(...args: any) => any> = Partial<InstanceProperties<T>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 
-export type PostProperties<T> = Omit<T, keyof DbModel>;
-export type PutProperties<T> = Omit<T, keyof DbModel>;
-export type PatchProperties<T> = Partial<Omit<T, keyof DbModel>>;
+export type PostInterface<T> = Omit<T, keyof DbModel>;
+export type PutInterface<T> = Omit<T, keyof DbModel>;
+export type PatchInterface<T> = Partial<Omit<T, keyof DbModel>>;
