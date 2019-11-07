@@ -1,4 +1,4 @@
-import { v4 as UUID }                             from "uuid";
+import { v4 as UUID } from "uuid";
 import { Constructor, PartialInstanceProperties } from "./utils/types";
 
 
@@ -55,9 +55,9 @@ export class DbModel {
     static fromJsonString<T extends typeof DbModel & Constructor & DbModelExtension<T>>(
         this: T,
         jsonString: string,
-        { withDefaults = true }: { withDefaults?: boolean } = {},
+        { additionalProperties, withDefaults = true }: { additionalProperties?: Record<keyof T, T[keyof T]>, withDefaults?: boolean } = {},
     ): InstanceType<T> {
-        return this.create(JSON.parse(jsonString), { withDefaults });
+        return this.create({ ...JSON.parse(jsonString), additionalProperties }, { withDefaults });
     }
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
 
@@ -93,9 +93,12 @@ export class DbModel {
     static fromJsonArrayString<T extends typeof DbModel & Constructor & DbModelExtension<T>>(
         this: T,
         jsonArrayString: string,
-        { withDefaults = true }: { withDefaults?: boolean } = {},
+        { additionalProperties, withDefaults = true }: { additionalProperties?: Record<keyof T, T[keyof T]>, withDefaults?: boolean } = {},
     ): InstanceType<T>[] {
-        const jsonArray = JSON.parse(jsonArrayString) as PartialInstanceProperties<T>[];
+        const jsonArray = JSON.parse(jsonArrayString).map((item: PartialInstanceProperties<T>[]) => ({
+            ...item,
+            additionalProperties,
+        })) as PartialInstanceProperties<T>[];
         return this.fromJsonArray(jsonArray, { withDefaults });
     }
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
