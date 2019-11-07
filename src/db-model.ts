@@ -55,7 +55,7 @@ export class DbModel {
     static fromJsonString<T extends typeof DbModel & Constructor & DbModelExtension<T>>(
         this: T,
         jsonString: string,
-        { additionalProperties, withDefaults = true }: { additionalProperties?: Record<keyof T, T[keyof T]>, withDefaults?: boolean } = {},
+        { additionalProperties, withDefaults = true }: { additionalProperties?: PartialInstanceProperties<T>, withDefaults?: boolean } = {},
     ): InstanceType<T> {
         return this.create({ ...JSON.parse(jsonString), additionalProperties }, { withDefaults });
     }
@@ -93,7 +93,7 @@ export class DbModel {
     static fromJsonArrayString<T extends typeof DbModel & Constructor & DbModelExtension<T>>(
         this: T,
         jsonArrayString: string,
-        { additionalProperties, withDefaults = true }: { additionalProperties?: Record<keyof T, T[keyof T]>, withDefaults?: boolean } = {},
+        { additionalProperties, withDefaults = true }: { additionalProperties?: PartialInstanceProperties<T>, withDefaults?: boolean } = {},
     ): InstanceType<T>[] {
         const jsonArray = JSON.parse(jsonArrayString).map((item: PartialInstanceProperties<T>[]) => ({
             ...item,
