@@ -14,5 +14,5 @@ export type OwnInstanceProperties<T extends new(...args: any) => any> = Omit<Ins
 export type PartialOwnInstanceProperties<T extends new(...args: any) => any> = Partial<OwnInstanceProperties<T>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 
 export type PostInterface<T, PathParameters extends string[]> = Omit<T, (keyof DbModel) | PathParameters[number]>;
-export type PutInterface<T> = Omit<T, keyof DbModel>;
-export type PatchInterface<T> = Partial<Omit<T, keyof DbModel>>;
+export type PutInterface<T, PathParameters extends string> = Omit<T, keyof DbModel | PathParameters[number]>;
+export type PatchInterface<T, PathParameters extends string[]> = Partial<Omit<T, keyof DbModel | PathParameters[number]>>;
