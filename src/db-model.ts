@@ -1,5 +1,7 @@
-import { v4 as UUID }                             from "uuid";
-import { Constructor, PartialInstanceProperties } from "./utils/types";
+import { v4 as UUID }                                                                        from "uuid";
+import {
+    Constructor, PartialInstanceProperties, PartialOwnInstanceProperties,
+} from "./utils/types";
 
 
 /**
@@ -34,7 +36,7 @@ export class DbModel {
      */
     static fromJson<T extends typeof DbModel & Constructor & DbModelExtension<T>>(
         this: T,
-        json: PartialInstanceProperties<T>,
+        json: Parameters<T["create"]>[0],
         { withDefaults = false }: { withDefaults?: boolean } = {},
     ): InstanceType<T> {
         return this.create(json, { withDefaults });
@@ -72,7 +74,7 @@ export class DbModel {
      */
     static fromJsonArray<T extends typeof DbModel & Constructor & DbModelExtension<T>>(
         this: T,
-        jsonArray: PartialInstanceProperties<T>[],
+        jsonArray: Parameters<T["create"]>[0][],
         { withDefaults = false }: { withDefaults?: boolean } = {},
     ): InstanceType<T>[] {
         return jsonArray.map(json => this.fromJson(json, { withDefaults }));
@@ -98,7 +100,7 @@ export class DbModel {
         const jsonArray = JSON.parse(jsonArrayString).map((item: PartialInstanceProperties<T>[]) => ({
             ...item,
             ...additionalProperties,
-        })) as PartialInstanceProperties<T>[];
+        })) as Parameters<T["create"]>[0][];
         return this.fromJsonArray(jsonArray, { withDefaults });
     }
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
@@ -161,5 +163,5 @@ export class DbModel {
 }
 
 interface DbModelExtension<T extends typeof DbModel & Constructor> {
-    create(params: PartialInstanceProperties<InstanceType<T>>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
+    create(params: PartialOwnInstanceProperties<T>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
 }
