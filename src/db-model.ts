@@ -1,7 +1,5 @@
-import { v4 as UUID }                                                                        from "uuid";
-import {
-    Constructor, PartialInstanceProperties, PartialOwnInstanceProperties,
-} from "./utils/types";
+import { v4 as UUID }                                                           from "uuid";
+import { Constructor, PartialInstanceProperties, PartialOwnInstanceProperties } from "./utils/types";
 
 
 /**
@@ -109,12 +107,13 @@ export class DbModel {
     /**
      * Returns an instance to be used to create a new DB entry, including optional `resourceId` and `created` fields.
      *
-     * @param options               Options object
-     * @param options.resourceId    Specifies whether a `resourceId` field should be added
-     * @param options.created       Specifies whether a `created` field should be added
+     * @param options                       Options object
+     * @param [options.resourceId=true]     Specifies whether a `resourceId` field should be added
+     * @param [options.created=true]        Specifies whether a `created` field should be added
+     * @param [options.updated=false]        Specifies whether an `updated` field should be added
      */
     createDbEntry(
-        { resourceId = true, created = true }: { resourceId?: boolean, created?: boolean } = {},
+        { resourceId = true, created = true, updated = false }: { resourceId?: boolean, created?: boolean, updated?: boolean } = {},
     ) {
 
         Object.assign(this, {
@@ -123,6 +122,9 @@ export class DbModel {
                 {},
             ...!Object.prototype.hasOwnProperty.call(this, "created") && created ?
                 { created: new Date().getTime() } :
+                {},
+            ...!Object.prototype.hasOwnProperty.call(this, "updated") && updated ?
+                { updated: new Date().getTime() } :
                 {},
         });
 
@@ -133,10 +135,10 @@ export class DbModel {
     /**
      * Returns an instance to be used to update a DB entry, including an optional `updated` field.
      *
-     * @param options               Options object
-     * @param options.updated       Specifies whether a `resourceId` field should be added
-     * @param options.blackList     Specifies a black-list of fields that should not be included in the update
-     * @param options.whiteList     Specifies a white-list of fields that should be included in the update
+     * @param options                   Options object
+     * @param [options.updated=true]    Specifies whether an `updated` field should be added
+     * @param options.blackList         Specifies a black-list of fields that should not be included in the update
+     * @param options.whiteList         Specifies a white-list of fields that should be included in the update
      */
     updateDbEntry<T extends DbModel>(
         this: T,
