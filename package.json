@@ -1,7 +1,7 @@
 {
     "name": "@piloteers/common-models",
     "author": "Piloteers GmbH",
-    "version": "1.0.33",
+    "version": "1.0.34",
     "description": "Standard models shared by frontend and backend projects.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
