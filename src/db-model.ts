@@ -1,4 +1,4 @@
-import { v4 as UUID }                                                           from "uuid";
+import { v4 as UUID }                             from "uuid";
 import { Constructor, PartialInstanceProperties } from "./utils/types";
 
 
@@ -118,14 +118,11 @@ export class DbModel {
 
         Object.assign(this, {
             ...!Object.prototype.hasOwnProperty.call(this, "resourceId") && resourceId ?
-                { resourceId: UUID() } :
-                {},
+                { resourceId: UUID() } : {},
             ...!Object.prototype.hasOwnProperty.call(this, "created") && created ?
-                { created: new Date().getTime() } :
-                {},
+                { created: new Date().getTime() } : {},
             ...!Object.prototype.hasOwnProperty.call(this, "updated") && updated ?
-                { created: new Date().getTime() } :
-                {},
+                { updated: new Date().getTime() } : {},
         });
 
         return this;
@@ -150,8 +147,7 @@ export class DbModel {
 
         Object.assign(this, {
             ...!Object.prototype.hasOwnProperty.call(this, "updated") && updated ?
-                { updated: new Date().getTime() } :
-                { resourceId: UUID() },
+                { updated: new Date().getTime() } : {},
         });
 
         for (let key of Object.keys(this) as (keyof T)[]) {
