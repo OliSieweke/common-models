@@ -113,7 +113,7 @@ export class DbModel {
      * @param [options.created=true]        Specifies whether a `created` field should be added
      */
     createDbEntry(
-        { resourceId = true, created = true }: { resourceId?: boolean, created?: boolean } = {},
+        { resourceId = true, created = true, updated = false }: { resourceId?: boolean, created?: boolean, updated?: boolean } = {},
     ) {
 
         Object.assign(this, {
@@ -121,6 +121,9 @@ export class DbModel {
                 { resourceId: UUID() } :
                 {},
             ...!Object.prototype.hasOwnProperty.call(this, "created") && created ?
+                { created: new Date().getTime() } :
+                {},
+            ...!Object.prototype.hasOwnProperty.call(this, "updated") && updated ?
                 { created: new Date().getTime() } :
                 {},
         });
@@ -140,15 +143,12 @@ export class DbModel {
      */
     updateDbEntry<T extends DbModel>(
         this: T,
-        { created = false, updated = true, blackList = [], whiteList }: { created?: boolean, updated?: boolean, blackList?: (keyof T)[], whiteList?: (keyof T)[] } = {},
+        { updated = true, blackList = [], whiteList }: { updated?: boolean, blackList?: (keyof T)[], whiteList?: (keyof T)[] } = {},
     ) {
-        !created && blackList.push("created", "resourceId");        // The "resourceId" and "created" fields should not be overwritten for patch operations
+        blackList.push("created", "resourceId");                    // The "resourceId" and "created" fields should not be overwritten when provided
         whiteList && updated && whiteList.push("updated");          // We don't want to remove the "updated" field when explicitly specified
 
         Object.assign(this, {
-            ...!Object.prototype.hasOwnProperty.call(this, "created") && created ?
-                { updated: new Date().getTime() } :
-                { resourceId: UUID() },
             ...!Object.prototype.hasOwnProperty.call(this, "updated") && updated ?
                 { updated: new Date().getTime() } :
                 { resourceId: UUID() },
