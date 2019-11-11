@@ -142,8 +142,8 @@ export class DbModel {
         this: T,
         { created = false, updated = true, blackList = [], whiteList }: { created?: boolean, updated?: boolean, blackList?: (keyof T)[], whiteList?: (keyof T)[] } = {},
     ) {
-        blackList.push("created", "resourceId");                // The "resourceId" and "created" fields should never be overwritten when present
-        whiteList && updated && whiteList.push("updated");      // We don't want to remove the "updated" field when explicitly specified
+        !created && blackList.push("created", "resourceId");        // The "resourceId" and "created" fields should not be overwritten for patch operations
+        whiteList && updated && whiteList.push("updated");          // We don't want to remove the "updated" field when explicitly specified
 
         Object.assign(this, {
             ...!Object.prototype.hasOwnProperty.call(this, "created") && created ?
