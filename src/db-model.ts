@@ -1,5 +1,5 @@
 import { v4 as UUID }                                                           from "uuid";
-import { Constructor, PartialInstanceProperties, PartialOwnInstanceProperties } from "./utils/types";
+import { Constructor, PartialInstanceProperties } from "./utils/types";
 
 
 /**
@@ -17,10 +17,11 @@ export class DbModel {
      *
      * @param args  Arguments
      */
-    protected constructor(...args: any[]) { /* eslint-disable-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any */
+    constructor(...args: any[]) { /* eslint-disable-line @typescript-eslint/no-explicit-any */
         if (new.target === DbModel) {
             throw new Error("The DbModel class should be extended and not instantiated directly.");
         }
+        Object.assign(this, args[0]);
     }
 
     /* eslint-disable jsdoc/require-param, jsdoc/check-param-names */
@@ -121,7 +122,7 @@ export class DbModel {
                 {},
             ...!Object.prototype.hasOwnProperty.call(this, "created") && created ?
                 { created: new Date().getTime() } :
-                {}
+                {},
         });
 
         return this;
@@ -165,5 +166,5 @@ export class DbModel {
 }
 
 interface DbModelExtension<T extends typeof DbModel & Constructor> {
-    create(params: PartialOwnInstanceProperties<T>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
+    create(params: PartialInstanceProperties<T>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
 }
