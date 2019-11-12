@@ -1,5 +1,5 @@
-import { v4 as UUID }                             from "uuid";
-import { Constructor, PartialInstanceProperties } from "./utils/types";
+import { v4 as UUID }                                                 from "uuid";
+import { Constructor, PartialInstanceProperties, InstanceProperties } from "./utils/types";
 
 
 /**
@@ -104,6 +104,20 @@ export class DbModel {
     }
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
 
+    // [12.11.19 | Oli] TODO: JSDoc
+    static getProtectedFields<T extends typeof DbModel & Constructor & ProtectedDbModelExtension<T>>(
+        this: T,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        roles?: any[], // [12.11.19 | Oli] TODO: Roles enum
+    ) {
+        const protectedFields = [];
+        for (const [key, value] of this.protectedFields.entries()) {
+            if (!roles || !roles.includes(key)) {
+                protectedFields.push(...value);
+            }
+        }
+        return protectedFields;
+    }
 
     /**
      * Returns an instance to be used to create a new DB entry, including optional `resourceId` and `created` fields.
@@ -163,4 +177,9 @@ export class DbModel {
 
 interface DbModelExtension<T extends typeof DbModel & Constructor> {
     create(params: PartialInstanceProperties<T>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
+}
+
+interface ProtectedDbModelExtension<T extends typeof DbModel & Constructor> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    protectedFields: Map<any, (keyof InstanceProperties<T>)[]>; // [12.11.19 | Oli] TODO: any to Role enum
 }
