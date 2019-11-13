@@ -183,3 +183,15 @@ interface DbModelExtension<T extends typeof DbModel & Constructor> {
     protectedFields?: Map<any, (keyof InstanceProperties<T>)[]>; // [12.11.19 | Oli] TODO: any to Role enum
     create(params: PartialInstanceProperties<T>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
 }
+
+type DbModelClass = typeof DbModel;
+export interface DbModelWithKeys<T extends DbModel> extends DbModelClass {
+    partitionKey: {
+        attribute: keyof T,
+        pathParameter: string,
+    };
+    sortKey?: {
+        attribute: keyof T,
+        pathParameter: string,
+    };
+}
