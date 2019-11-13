@@ -1,5 +1,5 @@
 import { v4 as UUID }                                                 from "uuid";
-import { Constructor, PartialInstanceProperties, InstanceProperties } from "./utils/types";
+import { Constructor, PartialInstanceProperties, InstanceProperties, NonMethodKeys } from "./utils/types";
 
 
 /**
@@ -185,9 +185,9 @@ interface DbModelExtension<T extends typeof DbModel & Constructor> {
 }
 
 type DbModelClass = typeof DbModel;
-export interface DbModelWithKeys<T> extends DbModelClass {
+export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass {
     partitionKey: {
-        attribute: keyof T,
+        attribute: keyof NonMethodKeys<InstanceType<T>>,
         pathParameter: string,
     };
     sortKey?: {
