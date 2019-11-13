@@ -8,11 +8,12 @@ export type NonMethodKeys<T> = Exclude<{
     [Key in keyof T]:
     T[Key] extends Function ? never : Key
 }[keyof T], undefined>;
+export type NonMethodProperties<T> = Pick<T, NonMethodKeys<T>>;
 export type InstanceProperties<T extends new(...args: any) => any> = Pick<InstanceType<T>, NonMethodKeys<InstanceType<T>>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 export type PartialInstanceProperties<T extends new(...args: any) => any> = Partial<InstanceProperties<T>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 export type OwnInstanceProperties<T extends new(...args: any) => any> = Omit<InstanceProperties<T>, NonMethodKeys<DbModel>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 export type PartialOwnInstanceProperties<T extends new(...args: any) => any> = Partial<OwnInstanceProperties<T>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 
-export type PostInterface<T extends Constructor, ForbiddenFields extends Readonly<(keyof PartialInstanceProperties<T>)[]> = []> = Omit<InstanceType<T>, (keyof DbModel) | ForbiddenFields[number]>;
+export type PostInterface<T, ForbiddenFields extends Readonly<NonMethodKeys<T>[]> = []> = Omit<NonMethodProperties<T>, ForbiddenFields[number]>;
 export type PutInterface<T, PathParameters extends string[] = []> = Omit<T, (keyof DbModel) | PathParameters[number]>;
 export type PatchInterface<T, PathParameters extends string[] = []> = Partial<Omit<T, (keyof DbModel) | PathParameters[number]>>;
