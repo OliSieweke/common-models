@@ -187,7 +187,7 @@ interface DbModelExtension<T extends typeof DbModel & Constructor> {
 type DbModelClass = typeof DbModel;
 export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass {
     partitionKey: {
-        attribute: keyof NonMethodKeys<InstanceType<T>>,
+        attribute: NonMethodKeys<InstanceType<T>>,
         pathParameter: string,
     };
     sortKey?: {
