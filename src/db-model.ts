@@ -191,7 +191,7 @@ export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass {
         pathParameter: string,
     };
     sortKey?: {
-        attribute: keyof T,
+        attribute: keyof InstanceType<T>,
         pathParameter: string,
     };
 }
