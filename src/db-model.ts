@@ -6,7 +6,7 @@ import { Constructor, PartialInstanceProperties, InstanceProperties } from "./ut
  * Standard DB Model for creating instances and preparing Dynamo DB data. To be shared across the front-end and back-end.
  */
 export class DbModel {
-    static readonly fields = ["resourceId", "created", "updated"] as const;
+    static readonly fields? = ["resourceId", "created", "updated"] as const;
     resourceId?: string;
     created?: number;
     updated?: number;
@@ -185,7 +185,7 @@ interface DbModelExtension<T extends typeof DbModel & Constructor> {
 }
 
 type DbModelClass = typeof DbModel;
-export interface DbModelWithKeys<T extends DbModel> extends DbModelClass {
+export interface DbModelWithKeys<T> extends DbModelClass {
     partitionKey: {
         attribute: keyof T,
         pathParameter: string,
