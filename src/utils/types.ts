@@ -15,5 +15,5 @@ export type OwnInstanceProperties<T extends new(...args: any) => any> = Omit<Ins
 export type PartialOwnInstanceProperties<T extends new(...args: any) => any> = Partial<OwnInstanceProperties<T>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 
 export type PostInterface<T, ForbiddenFields extends Readonly<NonMethodKeys<T>[]> = [], AuthorizedFields extends Readonly<NonMethodKeys<T>[]> = Readonly<NonMethodKeys<T>[]>> = Omit<Pick<NonMethodProperties<T>, AuthorizedFields[number]>, ForbiddenFields[number] | keyof DbModel>;
-export type PutInterface<T, PathParameters extends string[] = []> = Omit<T, (keyof DbModel) | PathParameters[number]>;
+export type PutInterface<T, ForbiddenFields extends Readonly<NonMethodKeys<T>[]> = [], AuthorizedFields extends Readonly<NonMethodKeys<T>[]> = Readonly<NonMethodKeys<T>[]>> = Omit<Pick<NonMethodProperties<T>, AuthorizedFields[number]>, ForbiddenFields[number] | keyof DbModel>;
 export type PatchInterface<T, PathParameters extends string[] = []> = Partial<Omit<T, (keyof DbModel) | PathParameters[number]>>;
