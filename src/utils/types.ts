@@ -16,4 +16,4 @@ export type PartialOwnInstanceProperties<T extends new(...args: any) => any> = P
 
 export type PostInterface<T, ForbiddenFields extends Readonly<NonMethodKeys<T>[]> = [], AuthorizedFields extends Readonly<NonMethodKeys<T>[]> = Readonly<NonMethodKeys<T>[]>> = Omit<Pick<NonMethodProperties<T>, AuthorizedFields[number]>, ForbiddenFields[number] | keyof DbModel>;
 export type PutInterface<T, ForbiddenFields extends Readonly<NonMethodKeys<T>[]> = [], AuthorizedFields extends Readonly<NonMethodKeys<T>[]> = Readonly<NonMethodKeys<T>[]>> = Omit<Pick<NonMethodProperties<T>, AuthorizedFields[number]>, ForbiddenFields[number] | keyof DbModel>;
-export type PatchInterface<T, PathParameters extends string[] = []> = Partial<Omit<T, (keyof DbModel) | PathParameters[number]>>;
+export type PatchInterface<T, ForbiddenFields extends Readonly<NonMethodKeys<T>[]> = [], AuthorizedFields extends Readonly<NonMethodKeys<T>[]> = Readonly<NonMethodKeys<T>[]>> = Partial<Omit<Pick<NonMethodProperties<T>, AuthorizedFields[number]>, ForbiddenFields[number] | keyof DbModel>>;
