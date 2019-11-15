@@ -10,7 +10,7 @@ export class AuthenticationUser extends DbModel {
         attribute: "email",
         pathParameter: "email",
     } as const;
-    static readonly globalSecondarypartitionKey = {
+    static readonly globalSecondaryPartitionKey = {
         attribute: "sub",
         pathParameter: "sub",
     } as const;
