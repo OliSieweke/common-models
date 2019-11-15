@@ -1,5 +1,7 @@
 import { DbModel } from "../db-model";
 
+// [15.11.19 | Oli] TODO: To be removed once Angular can be updated to TS 3.5
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>; /* eslint-disable-line @typescript-eslint/no-explicit-any */
 
 export type Constructor = new(...args: any) => any; /* eslint-disable-line @typescript-eslint/no-type-alias, @typescript-eslint/no-explicit-any */
 
