@@ -6,6 +6,11 @@ import { Permission, PermissionTypesEnum, RolesEnum } from "../permissions/permi
  *
  */
 export class AuthenticationUser extends DbModel {
+    static readonly partitionKey = {
+        attribute: "email",
+        pathParameter: "email",
+    } as const;
+
     constructor(
         public sub: string,
         public email: string,
