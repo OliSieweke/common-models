@@ -178,7 +178,7 @@ export class DbModel {
     /* eslint-enable jsdoc/require-param, jsdoc/check-param-names */
 }
 
-interface DbModelExtension<T extends typeof DbModel & Constructor> {
+export interface DbModelExtension<T extends typeof DbModel & Constructor> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protectedFields?: Map<any, (keyof InstanceProperties<T>)[]>; // [12.11.19 | Oli] TODO: any to Role enum
     create(params: PartialInstanceProperties<T>, options?: { withDefaults?: boolean }): InstanceType<T>; // [30.10.19 | Oli] THINK: Ideally we would like `create()` to be an protected abstract static method on DbModel, which is not supported at the moment. Check this issue: https://github.com/microsoft/TypeScript/issues/34516
