@@ -22,7 +22,7 @@ export class DbModel {
         if (new.target === DbModel) {
             throw new Error("The DbModel class should be extended and not instantiated directly.");
         }
-        const {resourceId, created, updated} = args[0];
+        const {resourceId, created, updated} = args[0] || {};
         Object.assign(this, {resourceId, created, updated});
     }
 
