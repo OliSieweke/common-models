@@ -24,9 +24,9 @@ export class DbModel {
         }
         // NB: Given how the rest is structured, we don't want undefined values.
         const { resourceId, created, updated } = args[0] || {};
-        if (resourceId) { this.resourceId = resourceId}
-        if (created) { this.created = created}
-        if (updated) { this.updated = updated}
+        if (resourceId) { this.resourceId = resourceId }
+        if (created) { this.created = created }
+        if (updated) { this.updated = updated }
     }
 
     /* eslint-disable jsdoc/require-param, jsdoc/check-param-names */
