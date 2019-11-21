@@ -22,8 +22,11 @@ export class DbModel {
         if (new.target === DbModel) {
             throw new Error("The DbModel class should be extended and not instantiated directly.");
         }
-        const {resourceId, created, updated} = args[0] || {};
-        Object.assign(this, {resourceId, created, updated});
+        // NB: Given how the rest is structured, we don't want undefined values.
+        const { resourceId, created, updated } = args[0] || {};
+        if (resourceId) { this.resourceId = resourceId}
+        if (created) { this.created = created}
+        if (updated) { this.updated = updated}
     }
 
     /* eslint-disable jsdoc/require-param, jsdoc/check-param-names */
