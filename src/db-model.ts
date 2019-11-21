@@ -22,7 +22,8 @@ export class DbModel {
         if (new.target === DbModel) {
             throw new Error("The DbModel class should be extended and not instantiated directly.");
         }
-        Object.assign(this, args[0]);
+        const {resourceId, created, updated} = args[0];
+        Object.assign(this, {resourceId, created, updated});
     }
 
     /* eslint-disable jsdoc/require-param, jsdoc/check-param-names */
