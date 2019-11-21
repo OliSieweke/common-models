@@ -195,6 +195,10 @@ export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass { 
         attribute: keyof InstanceType<T>,
         pathParameter: string,
     };
+    globalSecondaryPartitionKey?: {
+        attribute: keyof InstanceType<T>,
+        pathParameter: string,
+    };
 }
 
 export interface DbModelWithTable<T extends DbModelClass> extends DbModelWithKeys<T> {
