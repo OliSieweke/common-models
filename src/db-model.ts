@@ -188,15 +188,15 @@ type DbModelClass = typeof DbModel;
 
 export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass { // [21.11.19 | Oli] TODO: Make fields readonly?
     partitionKey: {
-        attribute: NonMethodKeys<InstanceType<T>>,
+        attribute: NonMethodKeys<InstanceType<T>> & string,
         pathParameter: string,
     };
     sortKey?: {
-        attribute: keyof InstanceType<T>,
+        attribute: keyof InstanceType<T> & string,
         pathParameter: string,
     };
     globalSecondaryPartitionKey?: {
-        attribute: keyof InstanceType<T>,
+        attribute: keyof InstanceType<T> & string,
         pathParameter: string,
     };
 }
