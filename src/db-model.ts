@@ -1,5 +1,5 @@
-import { v4 as UUID }                                                 from "uuid";
-import { Constructor, PartialInstanceProperties, InstanceProperties, NonMethodKeys } from "./utils/types";
+import { v4 as UUID }                                                                from "uuid";
+import { Constructor, InstanceProperties, NonMethodKeys, PartialInstanceProperties } from "./utils/types";
 
 
 /**
@@ -185,7 +185,8 @@ export interface DbModelExtension<T extends typeof DbModel & Constructor> {
 }
 
 type DbModelClass = typeof DbModel;
-export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass {
+
+export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass { // [21.11.19 | Oli] TODO: Make fields readonly?
     partitionKey: {
         attribute: NonMethodKeys<InstanceType<T>>,
         pathParameter: string,
@@ -194,4 +195,8 @@ export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass {
         attribute: keyof InstanceType<T>,
         pathParameter: string,
     };
+}
+
+export interface DbModelWithTable<T extends DbModelClass> extends DbModelClass {
+    tableIdentifier: string;
 }

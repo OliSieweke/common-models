@@ -26,7 +26,7 @@ export enum RolesEnum {
 /**
  *
  */
-export class Permission extends DbModel {
+export class Permission extends DbModel { // [21.11.19 | Oli] TODO: No need for this to extend DbModel
     constructor(
         public resourceType: PermissionTypesEnum,
         public resourceId: string,
