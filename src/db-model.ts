@@ -197,6 +197,6 @@ export interface DbModelWithKeys<T extends DbModelClass> extends DbModelClass { 
     };
 }
 
-export interface DbModelWithTable<T extends DbModelClass> extends DbModelClass {
+export interface DbModelWithTable<T extends DbModelClass> extends DbModelWithKeys<T> {
     tableIdentifier: string;
 }
